@@ -14,7 +14,7 @@
     <div class="grid">
       <article class="card">
         <h2>وش الكلمة اللي تبي تنطقها؟</h2>
-        <form id="wordForm"><label for="word">كلمة أو جملة بالماندرين</label><textarea id="word" dir="auto" lang="zh" maxlength="250" required placeholder="你好"></textarea><div class="examples"><span>جرّب</span><button type="button" data-word="你好" lang="zh">你好</button><button type="button" data-word="谢谢" lang="zh">谢谢</button><button type="button" data-word="我想喝水" lang="zh">我想喝水</button><button type="button" data-word="银行" lang="zh">银行</button></div><button class="primary full">اعرض النطق واستمع ▶</button></form>
+        <form id="wordForm"><label for="word">كلمة أو جملة بالحروف الصينية أو البينيين</label><textarea id="word" dir="auto" maxlength="250" required placeholder="你好 أو kuài"></textarea><div class="examples"><span>جرّب</span><button type="button" data-word="你好" lang="zh">你好</button><button type="button" data-word="谢谢" lang="zh">谢谢</button><button type="button" data-word="我想喝水" lang="zh">我想喝水</button><button type="button" data-word="银行" lang="zh">银行</button><button type="button" data-word="kuài" lang="zh-Latn">kuài</button></div><button class="primary full">اعرض النطق واستمع ▶</button></form>
       </article>
       <article class="card result">
         <p class="eyebrow">النطق المرجعي</p>
@@ -22,6 +22,7 @@
         <div class="controls"><button id="listen" class="outline">▶ استمع</button><button id="slow" class="outline">◷ ببطء</button><button id="stop" class="outline">■ إيقاف</button></div>
         <audio id="referenceAudio" controls preload="none" aria-label="مشغّل النطق"></audio>
         <p id="source" class="muted"></p>
+        <p id="wordMessage" role="status" class="muted"></p>
       </article>
     </div>
     <article class="card practice"><div><h2>الحين دورك</h2><p>قل نفس العبارة، وراجع النغمات والمقاطع مع Gemini.</p></div><button id="recordPron" class="primary">● سجّل نطقك</button><audio id="pronAudio" controls hidden></audio><div id="feedback" class="feedback" aria-live="polite"></div></article>
@@ -37,5 +38,5 @@
 </main>
 <dialog id="setup"><form id="setupForm"><h2>ربط Gemini</h2><p>أنشئ مفتاحًا من مشروع على الخطة المجانية في Google AI Studio. يبقى المفتاح في ذاكرة الصفحة حتى تغلقها أو تحدّثها. التسجيلات المرسلة للمراجعة تُعالج لدى Google.</p><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">فتح Google AI Studio ↗</a><label for="key">مفتاح API</label><input id="key" type="password" dir="ltr" autocomplete="off" required><div class="controls"><button class="primary">تفعيل</button><button id="closeSetup" type="button" class="outline">إغلاق</button><button id="disconnect" type="button" class="outline" hidden>قطع الاتصال</button></div><p id="keyStatus" role="status"></p></form></dialog>
 <footer>نُطق <span lang="zh">· 普通话</span></footer>
-<script src="app.js"></script>
+<script src="app.js?v=pinyin"></script>
 </html>
