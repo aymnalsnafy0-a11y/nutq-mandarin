@@ -206,16 +206,13 @@ async function play(value, slow = false, reference = false, output) {
   stopAudio();
   status();
   const request = playback;
-  const directFirst = reference || output || !key;
-  if (directFirst) {
+  if (!key) {
     try { await fallbackPlay(value,slow,reference,request,output); return; }
     catch (error) {
       if (request !== playback) return;
-      if (!key) {
-        if (reference) $('source').textContent = '';
-        status(report(error));
-        return;
-      }
+      if (reference) $('source').textContent = '';
+      status(report(error));
+      return;
     }
   }
   try {
@@ -248,12 +245,10 @@ async function play(value, slow = false, reference = false, output) {
       status('الصوت جاهز. اضغط زر التشغيل داخل المشغّل.');
       return;
     }
-    if (!directFirst) {
-      activeAudio?.pause();
-      if (activeUrl) URL.revokeObjectURL(activeUrl);
-      activeUrl = null;
-      try { await fallbackPlay(value,slow,reference,request); return; } catch { /* Keep the Gemini error. */ }
-    }
+    activeAudio?.pause();
+    if (activeUrl) URL.revokeObjectURL(activeUrl);
+    activeUrl = null;
+    try { await fallbackPlay(value,slow,reference,request,output); return; } catch { /* Keep the Gemini error. */ }
     if (request !== playback) return;
     if (reference) $('source').textContent = '';
     status(report(error));
