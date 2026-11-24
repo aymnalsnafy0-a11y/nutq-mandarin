@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f5ef">
+<meta name="referrer" content="no-referrer">
+<title>نُطق | مدرّب الماندرين</title>
+<link rel="stylesheet" href="style.css">
+<header><div class="brand"><b lang="zh">声</b><div>نُطق <small>مدرّب الماندرين</small></div></div><button id="settings" class="outline">⚙ إعدادات Gemini</button></header>
+<main>
+  <section class="hero"><div><p class="eyebrow">استوديو الماندرين</p><h1>اسمعها. قلها.<br><em>واضبط النغمة.</em></h1><p>اكتب كلمة بالصينية، اسمع نطقها، ثم جرّبها بصوتك أو داخل محادثة.</p></div><div class="seal" lang="zh" aria-hidden="true">声<span>音</span></div></section>
+  <nav class="tabs" aria-label="وضع التدريب"><button id="pronTab" aria-pressed="true">تدريب النطق</button><button id="chatTab" aria-pressed="false">محادثة بالصينية</button></nav>
+  <section id="pron">
+    <div class="grid">
+      <article class="card">
+        <h2>وش الكلمة اللي تبي تنطقها؟</h2>
+        <form id="wordForm"><label for="word">كلمة أو جملة بالماندرين</label><textarea id="word" dir="auto" lang="zh" maxlength="250" required placeholder="你好"></textarea><div class="examples"><span>جرّب</span><button type="button" data-word="你好" lang="zh">你好</button><button type="button" data-word="谢谢" lang="zh">谢谢</button><button type="button" data-word="我想喝水" lang="zh">我想喝水</button><button type="button" data-word="银行" lang="zh">银行</button></div><button class="primary full">اعرض النطق واستمع ▶</button></form>
+      </article>
+      <article class="card result">
+        <p class="eyebrow">النطق المرجعي</p>
+        <p id="hanzi" lang="zh" dir="ltr">你好</p><p id="pinyin" dir="ltr">nǐ hǎo</p><p id="note">في الكلام المتصل تُنطق غالبًا ní hǎo بسبب توالي نغمتين ثالثتين.</p>
+        <div class="controls"><button id="listen" class="outline">▶ استمع</button><button id="slow" class="outline">◷ ببطء</button><button id="stop" class="outline">■ إيقاف</button></div>
+        <audio id="referenceAudio" controls preload="none" aria-label="مشغّل النطق"></audio>
+        <p id="source" class="muted"></p>
+      </article>
+    </div>
+    <article class="card practice"><div><h2>الحين دورك</h2><p>قل نفس العبارة، وراجع النغمات والمقاطع مع Gemini.</p></div><button id="recordPron" class="primary">● سجّل نطقك</button><audio id="pronAudio" controls hidden></audio><div id="feedback" class="feedback" aria-live="polite"></div></article>
+    <details class="tones card"><summary>دليل النغمات الأربعة والنغمة الخفيفة</summary><div id="toneList" class="examples"></div></details>
+  </section>
+  <section id="chat" class="card" hidden>
+    <h2>محادثة بالصينية</h2><p>ردّ بالصوت أو الكتابة. المدرب يصحح لك بالعربي ويكمّل معك بالماندرين.</p>
+    <div id="messages" role="log"></div>
+    <form id="chatForm"><label for="chatText">ردّك بالصينية</label><textarea id="chatText" dir="auto" maxlength="1000" placeholder="اكتب ردّك هنا"></textarea><div class="controls"><button class="primary">إرسال</button><button type="button" class="outline" id="recordChat">● سجّل ردّك</button><button type="button" class="outline" id="resetChat">محادثة جديدة</button></div></form>
+    <audio id="chatAudio" controls hidden></audio>
+  </section>
+  <p id="status" role="status"></p>
+</main>
+<dialog id="setup"><form id="setupForm"><h2>ربط Gemini</h2><p>أنشئ مفتاحًا من مشروع على الخطة المجانية في Google AI Studio. يبقى المفتاح في ذاكرة الصفحة حتى تغلقها أو تحدّثها. التسجيلات المرسلة للمراجعة تُعالج لدى Google.</p><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">فتح Google AI Studio ↗</a><label for="key">مفتاح API</label><input id="key" type="password" dir="ltr" autocomplete="off" required><div class="controls"><button class="primary">تفعيل</button><button id="closeSetup" type="button" class="outline">إغلاق</button><button id="disconnect" type="button" class="outline" hidden>قطع الاتصال</button></div><p id="keyStatus" role="status"></p></form></dialog>
+<footer>نُطق <span lang="zh">· 普通话</span></footer>
+<script src="app.js"></script>
+</html>
