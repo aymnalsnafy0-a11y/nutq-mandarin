@@ -29,14 +29,15 @@
     <details class="tones card"><summary>دليل النغمات الأربعة والنغمة الخفيفة</summary><div id="toneList" class="examples"></div></details>
   </section>
   <section id="chat" class="card" hidden>
-    <h2>محادثة بالصينية</h2><p>ردّ بالصوت أو الكتابة. المدرب يصحح لك بالعربي ويكمّل معك بالماندرين.</p>
+    <h2>محادثة بالصينية</h2><p>اضغط «تكلّم»، قل ردّك، ثم اضغط «أرسل صوتي». المدرّب يرد بالماندرين صوتًا ونصًا ويصحّح لك بالعربي.</p>
     <div id="messages" role="log"></div>
-    <form id="chatForm"><label for="chatText">ردّك بالصينية</label><textarea id="chatText" dir="auto" maxlength="1000" placeholder="اكتب ردّك هنا"></textarea><div class="controls"><button class="primary">إرسال</button><button type="button" class="outline" id="recordChat">● سجّل ردّك</button><button type="button" class="outline" id="resetChat">محادثة جديدة</button></div></form>
-    <audio id="chatAudio" controls hidden></audio>
+    <form id="chatForm"><label for="chatText">ردّك بالصينية</label><textarea id="chatText" dir="auto" maxlength="1000" placeholder="اكتب ردّك هنا"></textarea><div class="controls"><button type="button" class="primary" id="recordChat">● تكلّم</button><button class="outline">إرسال النص</button><button type="button" class="outline" id="resetChat">محادثة جديدة</button><button type="button" class="outline" id="retryChat" hidden>أعد إرسال التسجيل</button></div></form>
+    <p id="chatStatus" role="status"></p>
+    <audio id="chatAudio" controls hidden aria-label="استمع إلى تسجيلك"></audio>
   </section>
   <p id="status" role="status"></p>
 </main>
 <dialog id="setup"><form id="setupForm"><h2>ربط Gemini</h2><p>أنشئ مفتاحًا من مشروع على الخطة المجانية في Google AI Studio. يبقى المفتاح في ذاكرة الصفحة حتى تغلقها أو تحدّثها. التسجيلات المرسلة للمراجعة تُعالج لدى Google.</p><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">فتح Google AI Studio ↗</a><label for="key">مفتاح API</label><input id="key" type="password" dir="ltr" autocomplete="off" required><div class="controls"><button class="primary">تفعيل</button><button id="closeSetup" type="button" class="outline">إغلاق</button><button id="disconnect" type="button" class="outline" hidden>قطع الاتصال</button></div><p id="keyStatus" role="status"></p></form></dialog>
 <footer>نُطق <span lang="zh">· 普通话</span></footer>
-<script src="app.js?v=pinyin"></script>
+<script src="app.js?v=voice-chat"></script>
 </html>
