@@ -29,6 +29,13 @@ let pendingChatAudio = null;
 let pendingPronunciation = null;
 const audioCache = new Map();
 const speech = window.speechSynthesis;
+const keyStorageName = 'nutq.gemini.apiKey';
+let keyRemembered = false;
+
+try {
+  key = localStorage.getItem(keyStorageName) || '';
+  keyRemembered = Boolean(key);
+} catch { /* The browser may block local storage. */ }
 
 function status(message = '') {
   $('status').textContent = $('chat').hidden ? message : '';
@@ -117,16 +124,30 @@ function report(error) {
   return error.message;
 }
 
-$('settings').onclick = () => { $('keyStatus').textContent = key ? 'Gemini متصل لهذه الجلسة.' : ''; $('setup').showModal(); };
+function showKeyState() {
+  $('disconnect').hidden = !key && !keyRemembered;
+  $('settings').textContent = key ? '● Gemini متصل' : '⚙ إعدادات Gemini';
+}
+showKeyState();
+
+$('settings').onclick = () => {
+  $('keyStatus').textContent = keyRemembered ? 'المفتاح محفوظ في هذا المتصفح.' : key ? 'Gemini متصل لهذه الجلسة.' : '';
+  $('setup').showModal();
+};
 $('closeSetup').onclick = () => $('setup').close();
 $('disconnect').onclick = () => {
   key = '';
   lookup++;
   stopAudio();
   audioCache.clear();
-  $('disconnect').hidden = true;
-  $('settings').textContent = '⚙ إعدادات Gemini';
-  $('keyStatus').textContent = 'تم قطع الاتصال.';
+  try {
+    localStorage.removeItem(keyStorageName);
+    keyRemembered = false;
+    $('keyStatus').textContent = 'تم قطع الاتصال وحذف المفتاح من هذا المتصفح.';
+  } catch {
+    $('keyStatus').textContent = keyRemembered ? 'تم قطع الاتصال. تعذّر حذف المفتاح المحفوظ. امسح بيانات هذا الموقع من إعدادات المتصفح.' : 'تم قطع الاتصال.';
+  }
+  showKeyState();
 };
 $('setupForm').onsubmit = async event => {
   event.preventDefault();
@@ -134,17 +155,27 @@ $('setupForm').onsubmit = async event => {
   if (!input) return;
   const submit = event.submitter;
   submit.disabled = true;
+  $('disconnect').disabled = true;
   $('keyStatus').textContent = 'جاري التحقق من المفتاح…';
   try {
     await withChatModel(model => gemini(model,[{role:'user',parts:[{text:'Reply OK.'}]}],{},input));
     key = input;
     $('key').value = '';
-    $('disconnect').hidden = false;
-    $('settings').textContent = '● Gemini متصل';
-    $('setup').close();
+    try {
+      localStorage.setItem(keyStorageName,input);
+      keyRemembered = true;
+      $('setup').close();
+    } catch {
+      keyRemembered = false;
+      $('keyStatus').textContent = 'تم تفعيل Gemini لهذه الجلسة. المتصفح منع حفظ المفتاح.';
+    }
+    showKeyState();
     if (word) updateReference();
   } catch (error) { $('keyStatus').textContent = report(error); }
-  finally { submit.disabled = false; }
+  finally {
+    submit.disabled = false;
+    $('disconnect').disabled = false;
+  }
 };
 
 function wave(samples, rate) {
