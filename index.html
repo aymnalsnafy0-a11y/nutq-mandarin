@@ -29,6 +29,17 @@
         <p id="wordMessage" role="status" class="muted"></p>
       </article>
     </div>
+    <article class="card practice" aria-labelledby="voiceTitle">
+      <div><h2 id="voiceTitle">ترجمة صوتية</h2><p>اختر الاتجاه، تكلّم، ثم أرسل التسجيل.</p></div>
+      <div class="controls"><label for="voiceDirection">اتجاه الترجمة</label><select id="voiceDirection" class="outline"><option value="ar">من العربية إلى الصينية</option><option value="zh">من الصينية إلى العربية</option></select><button id="recordVoice" type="button" class="primary">● تكلّم</button></div>
+      <div id="voiceResult" class="feedback" aria-live="polite"></div>
+      <div class="controls"><button id="listenVoice" type="button" class="outline" hidden>▶ اسمع الترجمة</button></div>
+      <audio id="voiceAudio" controls hidden aria-label="صوت الترجمة"></audio>
+    </article>
+    <article class="card practice" aria-labelledby="recentTitle">
+      <div><h2 id="recentTitle">آخر 10 كلمات وعبارات</h2><p id="recentEmpty">تظهر هنا الكلمات التي تبحث عنها أو تترجمها.</p></div>
+      <div id="recentWords" class="examples"></div>
+    </article>
     <article class="card practice"><div><h2>الحين دورك</h2><p>قل نفس العبارة، وراجع النغمات والمقاطع مع Gemini.</p></div><button id="recordPron" class="primary">● سجّل نطقك</button><audio id="pronAudio" controls hidden></audio><div id="feedback" class="feedback" aria-live="polite"></div><button id="retryPron" class="outline" hidden>أعد مراجعة التسجيل</button></article>
     <details class="tones card"><summary>دليل النغمات الأربعة والنغمة الخفيفة</summary><div id="toneList" class="examples"></div></details>
   </section>
@@ -43,5 +54,5 @@
 </main>
 <dialog id="setup"><form id="setupForm"><h2>ربط Gemini</h2><p>أنشئ مفتاحًا من مشروع على الخطة المجانية في Google AI Studio. يُحفظ المفتاح في هذا المتصفح بعد التفعيل. تقدر تمسحه بزر حذف المفتاح. التسجيلات المرسلة للمراجعة تُعالج لدى Google.</p><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">فتح Google AI Studio ↗</a><label for="key">مفتاح API</label><input id="key" type="password" dir="ltr" autocomplete="off" required><div class="controls"><button class="primary">تفعيل</button><button id="closeSetup" type="button" class="outline">إغلاق</button><button id="disconnect" type="button" class="outline" hidden>حذف المفتاح</button></div><p id="keyStatus" role="status"></p></form></dialog>
 <footer>نُطق <span lang="zh">· 普通话</span></footer>
-<script src="app.js?v=remember-key"></script>
+<script src="app.js?v=voice-history"></script>
 </html>
